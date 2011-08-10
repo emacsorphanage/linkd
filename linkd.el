@@ -67,7 +67,7 @@
 ;;    the previous location.
 ;;
 ;;  * Should have a link follow behavior that takes you from @> to the
-;;    corresponding @*, not just to the next link (@* or @>).
+;;    corresponding @*, not just to the next link, @* or @>.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
