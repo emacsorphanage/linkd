@@ -327,17 +327,18 @@ Each such function should accept a file name as its argument."
 ;; are in effect whenever point is within the overlay.  For rapid
 ;; navigation, we will eventually attach some quick single-character
 ;; commands to the links, using the following keymap:
-(defvar linkd-overlay-map nil "Keymap for Linkd overlays.")
-(unless linkd-overlay-map
-  (setq linkd-overlay-map (make-sparse-keymap))
-  (define-key linkd-overlay-map (kbd "RET") 'linkd-follow-at-point)
-  ;; $$$$(define-key linkd-overlay-map [down-mouse-2] 'ignore)
-  (define-key linkd-overlay-map [mouse-2] 'linkd-follow-mouse)
-  (define-key linkd-overlay-map [mouse-4] 'linkd-back)
-  (define-key linkd-overlay-map (kbd "b") 'linkd-back)
-  (define-key linkd-overlay-map (kbd "l") 'linkd-back)
-  (define-key linkd-overlay-map (kbd "[") 'linkd-previous-link)
-  (define-key linkd-overlay-map (kbd "]") 'linkd-next-link))
+(defvar linkd-overlay-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "RET") 'linkd-follow-at-point)
+    ;; $$$$(define-key map [down-mouse-2] 'ignore)
+    (define-key map [mouse-2] 'linkd-follow-mouse)
+    (define-key map [mouse-4] 'linkd-back)
+    (define-key map (kbd "b") 'linkd-back)
+    (define-key map (kbd "l") 'linkd-back)
+    (define-key map (kbd "[") 'linkd-previous-link)
+    (define-key map (kbd "]") 'linkd-next-link)
+    map)
+  "Keymap for Linkd overlays.")
 
 (defvar linkd-process-block-function nil
   "Function called by `linkd-process-block'.
@@ -354,22 +355,23 @@ You can set this in the `Local Variables' section of a file.")
 ;; Used for export to LaTeX.
 (defvar linkd-latex-in-verbatim nil "Non-nil means we are inside a LaTeX verbatim section.")
 
-(defvar linkd-map nil "Keymap used by Linkd mode.")
-(when (null linkd-map)
-  (setq linkd-map (make-sparse-keymap))
-  (define-key linkd-map (kbd "C-c *")   'linkd-process-block)
-  (define-key linkd-map (kbd "C-c [")   'linkd-previous-link)
-  (define-key linkd-map (kbd "C-c ]")   'linkd-next-link)
-  (define-key linkd-map (kbd "C-c '")   'linkd-follow-at-point)
-  (define-key linkd-map [mouse-4]       'linkd-back)
-  (define-key linkd-map (kbd "C-c , b") 'linkd-back)
-  (define-key linkd-map (kbd "C-c , ,") 'linkd-insert-link)
-  (define-key linkd-map (kbd "C-c , t") 'linkd-insert-tag)
-  (define-key linkd-map (kbd "C-c , s") 'linkd-insert-star)
-  (define-key linkd-map (kbd "C-c , w") 'linkd-insert-wiki)
-  (define-key linkd-map (kbd "C-c , l") 'linkd-insert-lisp)
-  (define-key linkd-map (kbd "C-c , e") 'linkd-edit-link-at-point)
-  (define-key linkd-map (kbd "C-c , x") 'linkd-escape-datablock))
+(defvar linkd-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c *")   'linkd-process-block)
+    (define-key map (kbd "C-c [")   'linkd-previous-link)
+    (define-key map (kbd "C-c ]")   'linkd-next-link)
+    (define-key map (kbd "C-c '")   'linkd-follow-at-point)
+    (define-key map [mouse-4]       'linkd-back)
+    (define-key map (kbd "C-c , b") 'linkd-back)
+    (define-key map (kbd "C-c , ,") 'linkd-insert-link)
+    (define-key map (kbd "C-c , t") 'linkd-insert-tag)
+    (define-key map (kbd "C-c , s") 'linkd-insert-star)
+    (define-key map (kbd "C-c , w") 'linkd-insert-wiki)
+    (define-key map (kbd "C-c , l") 'linkd-insert-lisp)
+    (define-key map (kbd "C-c , e") 'linkd-edit-link-at-point)
+    (define-key map (kbd "C-c , x") 'linkd-escape-datablock)
+    map)
+  "Keymap used by Linkd mode.")
 
 ;; Linkd menu for menu bar.
 (easy-menu-define linkd-menu linkd-map "Linkd"
