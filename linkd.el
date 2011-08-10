@@ -207,7 +207,10 @@
   "Non-nil means icons, instead of text bullets, are displayed for links."
   :type 'boolean :group 'linkd)
 
-(defcustom linkd-icons-directory "~/.linkd-icons" "Directory where linkd's icons are kept."
+(defcustom linkd-icons-directory
+  (expand-file-name "icons" (file-name-directory
+			     (or (buffer-file-name) load-file-name)))
+  "Directory where linkd's icons are kept."
   :type 'directory :group 'linkd)
 
 (defcustom linkd-use-menu t
