@@ -649,7 +649,11 @@ $$$$$ FIXME: document args."
      overlay 'display (propertize display-text
                                   'face (or display-face 'linkd-generic-link-name)
                                   'keymap linkd-overlay-map)) ; add speed-navigation keys
-    (overlay-put overlay 'mouse-face 'highlight)
+    ;; $$$$$ FIXME: in 24.0.50 moving the mouse over these overlays highlights the text
+    ;; from the last char of the first visible line to the first char of the last visible
+    ;; line
+    (unless (eq emacs-major-version 24)
+      (overlay-put overlay 'mouse-face 'highlight))
     (overlay-put overlay 'linkd t) ; mark overlay so that we can find it later
     (overlay-put overlay 'keymap linkd-overlay-map) ; add speed-navigation keys
     (when bullet-text                   ; add bullet, if appropriate
